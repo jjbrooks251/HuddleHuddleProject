@@ -2,8 +2,8 @@ let records = []; //All records currently pulled from the database
 //let selectedRecord; //The currently selected record (if any)
 
 const getRecord = (id) => {
-    for(let record of records){
-        if(record.id == id){
+    for (let record of records) {
+        if (record.id == id) {
             return record;
         }
     }
@@ -80,9 +80,79 @@ function displayData(data) {
     });
 }
 
+function viewPetVisits(ownerId, petId) {
+    const ownerRecord = getRecord(ownerId);
+    let petRecord;
 
-function viewOwnerPets(ownerId){
-    const ownerPets = getRecord(ownerId).pets;    
+    for (pr of ownerRecord.pets) {
+        if (pr.id == petId) {
+            petRecord = pr;
+        }
+    }
+
+    const visits = pr.visits;
+    const modalBody = document.getElementById("modal-body");
+
+    let dataTable = document.getElementById("modal-tbl");
+    let keys = Object.keys(visits[0]); //Get all of the keys for the object. We dont care about which object.
+
+    //If the data table exists then delete it by removing it from the parent
+    if (!!dataTable) {
+        modalBody.removeChild(dataTable);
+    }
+
+    //Set up the initial table
+    dataTable = document.createElement("table");
+    dataTable.className = "table table-hover"; //Bootstrap
+    dataTable.id = "modal-tbl";
+    let head = dataTable.createTHead();
+    head.className = "thead-dark"; //Bootstrap        
+
+    //Create table headers    
+    for (let key of keys) {
+        let cell = document.createElement("th");
+        cell.innerHTML = "<b>" + key + "</b>";
+        head.appendChild(cell);
+    }
+
+    //Create table header cell for the selection boxes
+    let headCell = document.createElement("th");
+    headCell.innerHTML = "<b>Actions</b>";
+    head.appendChild(headCell);
+
+    //Attach the table to the document
+    modalBody.appendChild(dataTable);
+
+    //Start appending the data
+    let body = dataTable.createTBody();
+
+    //Create table rows
+    visits.forEach(element => {
+        row = body.insertRow();
+
+        for (let i = 0; i < keys.length + 1; i++) {
+            let cell = row.insertCell();
+            console.log(element);
+
+            if (i < keys.length) {
+                let text = document.createTextNode(element[keys[i]]);
+                cell.append(text);
+            } else {
+                let selector = document.createElement("INPUT");
+                selector.setAttribute("type", "button");
+                selector.setAttribute("id", element[keys[0]])
+                selector.setAttribute("class", "btn")
+                selector.setAttribute("onclick", "window.alert('Not implemented');");
+                selector.value = "[Delete Record] [Update Record]"
+                cell.append(selector);
+            }
+        }
+    });
+
+}
+
+function viewOwnerPets(ownerId) {
+    const ownerPets = getRecord(ownerId).pets;
     const modalBody = document.getElementById("modal-body");
 
     let dataTable = document.getElementById("modal-tbl");
@@ -130,11 +200,20 @@ function viewOwnerPets(ownerId){
                 let text = document.createTextNode(element[keys[i]]);
                 cell.append(text);
             } else {
+                let petId = element[keys[0]];
+
                 let selector = document.createElement("INPUT");
                 selector.setAttribute("type", "button");
-                selector.setAttribute("id", element[keys[0]])
+                selector.setAttribute("id", ownerId)
                 selector.setAttribute("class", "btn")
-                selector.setAttribute("onclick", "viewPetVists(id)");
+
+                if (ownerPets[0].visits == "") {
+                    selector.setAttribute("onclick", "window.alert('There are no recorded visits for this pet.');");
+                } else {
+                    selector.setAttribute("onclick", `viewPetVisits(id, ${petId})`);
+
+                }
+
                 selector.value = "View Visits"
                 cell.append(selector);
             }
