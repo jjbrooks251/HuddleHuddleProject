@@ -78,19 +78,32 @@ function displayData(data) {
     });
 }
 
-
 function makeRequest(method, url, body) {
+    const api = "http://localhost:9966/petclinic/api/";
     return new Promise((res, rej) => {
         const req = new XMLHttpRequest();
         req.open(method, api + url);
 
         req.onload = () => {
             if (req.status >= 200 && req.status < 300) {
-                res(req.responseText);
+                res(req.response);
             } else {
                 rej(req.statusText);
             }
         };
         req.send(body);
     });
+}
+
+function getAllOwners() {
+
+    makeRequest("GET", "owners", "")
+        .then(resp => {
+            console.log(resp);
+            displayData(resp);
+        })
+        .catch(error => {
+            console.log(error);
+        }
+        );
 }
