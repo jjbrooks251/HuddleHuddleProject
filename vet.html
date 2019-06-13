@@ -1,0 +1,61 @@
+<http>
+
+    <head>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous">
+    </head>
+
+    <body>
+        <script src="scripts/vet.js"></script>
+
+        <div id="container">
+
+            <div id="data-table">
+                <h1>Vet Details</h1>
+            </div>
+
+            <div id="buttons">
+                <br>
+                <button class="btn" onclick="getAllVets(displayData)">Get All Vets</button>
+                <button class="btn" onclick="getVetById()">Get Vet by ID</button>
+                <button class="btn" onclick="deleteVet()">Delete Chosen Vet</button>
+                <button class="btn" onclick="setTrigger('createVet')">Add Vet</button>
+                <button class="btn" onclick="setupUpdateForm(); setTrigger('updateVet')">Update Chosen Vet</button>
+            </div>
+        </div>
+
+        <div id="new-Vet-form">
+            <form class="form-inline" id="Vet-form" onsubmit="updateVet(); return false">
+                <label class="sr-only" for="inlineFormInputVetNo">Vet Number</label>
+                <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input type="text" class="form-control" id="inlineFormInputVetNo" placeholder="Vet No." required>
+                </div>
+
+                <label class="sr-only" for="inlineFormInputFname">Forename</label>
+                <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputFname" placeholder="Forename" required>
+
+                <label class="sr-only" for="inlineFormInputLname">Lastname</label>
+                <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputLname" placeholder="Surname" required>
+
+                <button type="submit" type="button" class="btn btn-primary mb-2">Submit</button>
+            </form>
+        </div>
+
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    </body>
+
+
+
+</http>
